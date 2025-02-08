@@ -62,6 +62,8 @@ group :development do
   gem "error_highlight", ">= 0.4.0", platforms: [:ruby]
 
   gem 'annotate'
+
+  gem "byebug", "~> 11.1"
 end
 
 group :test do
