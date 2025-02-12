@@ -3,6 +3,13 @@ class ApplicationController < ActionController::Base
 
   protected
 
+    rescue_from CanCan::AccessDenied do |exception|
+      respond_to do |format|
+        format.json { head :forbidden }
+        format.html { redirect_to root_path, alert: "Você não possui permissão!" }
+      end
+    end
+
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:name, :email, :role, :password, :password_confirmation)}
 
