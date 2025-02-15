@@ -18,6 +18,9 @@
           <% if can? :read, Resource %>
             <li><%= link_to "Recursos", resources_path %></li>
           <% end %>
+          <% if can? :read, Category %>
+            <li><%= link_to "Categorias", categories_path %></li>
+          <% end %>
           <% if user_signed_in? %>
             <li><%= link_to "Sair", destroy_user_session_path , method: :delete %></li>
           <% end %>

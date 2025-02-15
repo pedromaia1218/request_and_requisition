@@ -6,6 +6,8 @@ class Ability
   def initialize(user)
     return if user.nil?
 
+    can :manage, :all
+
     return unless user.technician?
     can :read, :all
 

@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   resources :resources
 
+  resources :categories
+
   devise_for :users
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
