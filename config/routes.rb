@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resources :resources
-
   resources :categories
+  resources :requests
 
   devise_for :users
   devise_scope :user do

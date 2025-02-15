@@ -1,0 +1,24 @@
+pt-BR:
+  activerecord:
+    models:
+      request: 'Solicitação'
+    attributes:
+      request:
+        description: 'Descrição'
+        priority: 'Prioridade'
+        status: 'Status'
+        title: 'Título'
+        assigned_to: 'Técnico responsável'
+        resource: 'Recurso'
+        user: 'Usuário solicitante'
+    enums:
+      request:
+        priority:
+          low: 'Baixa'
+          medium: 'Média'
+          high: 'Alta'
+        status:
+          open: 'Aberto'
+          accepted: 'Aceito'
+          rejected: 'Rejeitado'
+          closed: 'Fechado'

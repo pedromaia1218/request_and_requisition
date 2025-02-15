@@ -1,0 +1,36 @@
+<div id="<%= dom_id request %>">
+  <p>
+    <strong>Titulo:</strong>
+    <%= request.title %>
+  </p>
+
+  <p>
+    <strong>Descrição:</strong>
+    <%= request.description %>
+  </p>
+
+  <p>
+    <strong>Prioridade:</strong>
+    <%= I18n.t("activerecord.enums.request.priority.#{request.priority}") %>
+  </p>
+
+  <p>
+    <strong>Status:</strong>
+    <%= I18n.t("activerecord.enums.request.status.#{request.status}") %>
+  </p>
+
+  <p>
+    <strong>Técnico Responsável:</strong>
+    <%= request.assigned_to&.name %>
+  </p>
+
+  <p>
+    <strong>Solicitante:</strong>
+    <%= request.user.name %>
+  </p>
+
+  <p>
+    <strong>Recurso:</strong>
+    <%= request.resource.name %>
+  </p>
+</div>

@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @request %>
+
+<div>
+  <%= link_to "Editar essa solicitação", edit_request_path(@request) %> |
+  <%= link_to "Voltar para solicitações", requests_path %>
+
+  <%= button_to "Deletar solicitação", @request, method: :delete %>
+</div>
