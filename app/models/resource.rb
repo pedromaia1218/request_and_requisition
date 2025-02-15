@@ -21,4 +21,8 @@
 #
 class Resource < ApplicationRecord
   belongs_to :category
+
+  def available?
+    availability && amount > 0
+  end
 end

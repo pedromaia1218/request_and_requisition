@@ -3,6 +3,7 @@
 <%= render @request %>
 
 <div>
+  <%= link_to "Atribuir técnico", assign_technician_form_request_path %> |
   <%= link_to "Editar essa solicitação", edit_request_path(@request) %> |
   <%= link_to "Voltar para solicitações", requests_path %>
 

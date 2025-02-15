@@ -40,10 +40,15 @@ class Request < ApplicationRecord
   enum status: { open: 'open', accepted: 'accepted', rejected: 'rejected', closed: 'closed' }
 
   before_validation :set_default_status
+  validate :resource_must_be_available, on: :create
 
   private
 
   def set_default_status
     self.status ||= 'open'
+  end
+
+  def resource_must_be_available
+    errors.add(:resource, "não está disponível") unless resource&.available?
   end
 end

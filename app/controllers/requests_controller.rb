@@ -1,6 +1,7 @@
 class RequestsController < ApplicationController
   load_and_authorize_resource
   before_action :set_request, only: %i[ show edit update destroy ]
+  before_action :authorize_supervisor, only: [:assign_technician, :assign_technician_form]
 
   def index
     @requests = Request.all
@@ -53,6 +54,25 @@ class RequestsController < ApplicationController
     end
   end
 
+  def assign_technician
+    @request = Request.find(params[:id])
+    @technician = User.find(request_params[:assigned_to_id])
+
+    respond_to do |format|
+      if @request.update(assigned_to: @technician)
+        format.html { redirect_to @request, notice: "Técnico atribuído com sucesso." }
+        format.json { render :show, status: :ok, location: @request }
+      else
+        format.html { redirect_to @request, alert: "Falha ao atribuir técnico." }
+        format.json { render json: @request.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def assign_technician_form
+    @request = Request.find(params[:id])
+  end
+
   private
 
     def set_request
@@ -61,5 +81,11 @@ class RequestsController < ApplicationController
 
     def request_params
       params.require(:request).permit(:title, :description, :status, :priority, :resource_id, :user_id, :assigned_to_id)
+    end
+
+    def authorize_supervisor
+      unless current_user.supervisor?
+        redirect_to requests_path, alert: "Apenas supervisores podem atribuir técnicos."
+      end
     end
 end

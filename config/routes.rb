@@ -3,7 +3,12 @@ Rails.application.routes.draw do
 
   resources :resources
   resources :categories
-  resources :requests
+  resources :requests do
+    member do
+      get :assign_technician_form
+      patch :assign_technician
+    end
+  end
 
   devise_for :users
   devise_scope :user do

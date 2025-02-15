@@ -1,0 +1,14 @@
+<h1>Atribuir Técnico</h1>
+
+<%= form_with(model: @request, url: assign_technician_request_path(@request), local: true, method: :patch) do |form| %>
+  <div class="field">
+    <%= form.label :assigned_to_id, "Selecionar Técnico" %>
+    <%= form.collection_select :assigned_to_id, User.technician, :id, :name, prompt: "Escolha um técnico" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Atribuir Técnico" %>
+  </div>
+<% end %>
+
+<%= link_to 'Voltar', request_path(@request) %>
