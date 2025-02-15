@@ -9,15 +9,16 @@
 #  resource_type :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  categories_id :bigint
+#  category_id   :bigint
 #
 # Indexes
 #
-#  index_resources_on_categories_id  (categories_id)
+#  index_resources_on_category_id  (category_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (categories_id => categories.id)
+#  fk_rails_...  (category_id => categories.id)
 #
 class Resource < ApplicationRecord
+  belongs_to :category
 end
