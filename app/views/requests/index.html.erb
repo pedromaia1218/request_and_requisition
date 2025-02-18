@@ -4,11 +4,18 @@
 
 <div id="requests">
   <% @requests.each do |request| %>
-    <%= render request %>
-    <p>
-      <%= link_to "Ver solicitação", request %>
-    </p>
+    <% if current_user.technician? && request.accepted? %>
+      <%= render request %>
+      <p>
+        <%= link_to "Ver solicitação", request %>
+      </p>
+    <% elsif !current_user.technician? %>
+      <%= render request %>
+      <p>
+        <%= link_to "Ver solicitação", request %>
+      </p>
+    <% end %>
   <% end %>
 </div>
 
-<%= link_to "Novo solicitação", new_request_path %>
+<%= link_to "Nova solicitação", new_request_path %>

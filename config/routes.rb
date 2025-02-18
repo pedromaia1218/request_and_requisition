@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     member do
       get :assign_technician_form
       patch :assign_technician
+      patch :attend
     end
   end
 

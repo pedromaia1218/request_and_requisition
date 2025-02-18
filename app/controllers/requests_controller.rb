@@ -2,6 +2,7 @@ class RequestsController < ApplicationController
   load_and_authorize_resource
   before_action :set_request, only: %i[ show edit update destroy ]
   before_action :authorize_supervisor, only: [:assign_technician, :assign_technician_form]
+  before_action :authorize_technician, only: [:attend]
 
   def index
     @requests = Request.all
@@ -59,7 +60,7 @@ class RequestsController < ApplicationController
     @technician = User.find(request_params[:assigned_to_id])
 
     respond_to do |format|
-      if @request.update(assigned_to: @technician)
+      if @request.update(assigned_to: @technician, status: 'accepted')
         format.html { redirect_to @request, notice: "Técnico atribuído com sucesso." }
         format.json { render :show, status: :ok, location: @request }
       else
@@ -71,6 +72,20 @@ class RequestsController < ApplicationController
 
   def assign_technician_form
     @request = Request.find(params[:id])
+  end
+
+  def attend
+    @request = Request.find(params[:id])
+
+    respond_to do |format|
+      if @request.attend && @request.save
+        format.html { redirect_to @request, notice: "Solicitação atendida com sucesso." }
+        format.json { render :show, status: :ok, location: @request }
+      else
+        format.html { redirect_to @request, alert: "Falha ao atender solicitação." }
+        format.json { render json: @request.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   private
@@ -86,6 +101,12 @@ class RequestsController < ApplicationController
     def authorize_supervisor
       unless current_user.supervisor?
         redirect_to requests_path, alert: "Apenas supervisores podem atribuir técnicos."
+      end
+    end
+
+    def authorize_technician
+      unless current_user.technician? && @request.accepted?
+        redirect_to requests_path, alert: "Apenas técnicos podem atender solicitações aceitas."
       end
     end
 end

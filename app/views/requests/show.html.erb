@@ -3,9 +3,15 @@
 <%= render @request %>
 
 <div>
-  <%= link_to "Atribuir técnico", assign_technician_form_request_path %> |
+  <% if current_user.supervisor? %>
+    <%= link_to "Atribuir técnico", assign_technician_form_request_path %> |
+  <% end %>
   <%= link_to "Editar essa solicitação", edit_request_path(@request) %> |
   <%= link_to "Voltar para solicitações", requests_path %>
 
   <%= button_to "Deletar solicitação", @request, method: :delete %>
+
+  <% if current_user.technician? && @request.accepted? %>
+    <%= button_to "Atender solicitação", attend_request_path(@request), method: :patch %>
+  <% end %>
 </div>

@@ -42,6 +42,10 @@ class Request < ApplicationRecord
   before_validation :set_default_status
   validate :resource_must_be_available, on: :create
 
+  def attend
+    self.status = 'closed'
+  end
+
   private
 
   def set_default_status
