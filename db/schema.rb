@@ -20,6 +20,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_15_140436) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "request_id", null: false
+    t.string "message", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["request_id"], name: "index_notifications_on_request_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "requests", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -60,6 +70,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_15_140436) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "notifications", "requests"
+  add_foreign_key "notifications", "users"
   add_foreign_key "requests", "resources"
   add_foreign_key "requests", "users"
   add_foreign_key "requests", "users", column: "assigned_to_id"

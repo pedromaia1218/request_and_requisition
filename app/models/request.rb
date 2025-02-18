@@ -26,6 +26,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Request < ApplicationRecord
+  include Observable
+
   belongs_to :resource
   belongs_to :user
   belongs_to :assigned_to, class_name: 'User', optional: true

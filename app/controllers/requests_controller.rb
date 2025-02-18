@@ -57,6 +57,7 @@ class RequestsController < ApplicationController
 
   def assign_technician
     @request = Request.find(params[:id])
+    @request.add_observer(NotificationObserver.new(@request.user))
     @technician = User.find(request_params[:assigned_to_id])
 
     respond_to do |format|
@@ -76,6 +77,7 @@ class RequestsController < ApplicationController
 
   def attend
     @request = Request.find(params[:id])
+    @request.add_observer(NotificationObserver.new(@request.user))
 
     respond_to do |format|
       if @request.attend && @request.save
